@@ -130,7 +130,14 @@ public class QuestionController {
                 }
                 model.addAttribute("ranklist", finalList);
             } else {
-                model.addAttribute("ranklist", list);
+                finalList.addAll(list);
+                model.addAttribute("ranklist", finalList);
+            }
+            System.out.println("Ajde da vidim sad iz liste " +  finalList.get(0).getUserId());
+            System.out.println("Ajde da vidim sad ovo je ovako id " + userId);
+            if(!finalList.isEmpty() && !list.isEmpty() && finalList.get(0).getUserId().equals(userId)){
+                System.out.println("Uso sam ovde ");
+                model.addAttribute("cestitke", "cestitke");
             }
             model.addAttribute("questionNumberSpecial", questionNumber);
             return "participant";

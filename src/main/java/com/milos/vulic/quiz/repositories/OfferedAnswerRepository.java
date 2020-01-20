@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OfferedAnswerRepository extends JpaRepository<OfferedAnswer,Long> {
+public interface OfferedAnswerRepository extends JpaRepository<OfferedAnswer, Long> {
     List<OfferedAnswer> getAllByQuestion_QuestionId(Long questionId, Sort sort);
+
     OfferedAnswer findTopByQuestion_QuestionIdAndCorrectnessIsTrue(Long questionId);
+
     OfferedAnswer findByOfferedAnswerId(Long offeredAnswerId);
+
     List<OfferedAnswer> findAllByCorrectnessIsTrue();
 }

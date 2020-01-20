@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserQuestionAnswerImp implements UserQuestionAnswerService{
+public class UserQuestionAnswerImp implements UserQuestionAnswerService {
 
     private final UserQuestionAnswerRepository userQuestionAnswerRepository;
 
@@ -22,7 +22,7 @@ public class UserQuestionAnswerImp implements UserQuestionAnswerService{
 
     @Override
     public UserQuestionAnswer findByQuestionIdAndUserId(Long questionId, Long userId) {
-        return userQuestionAnswerRepository.findByQuestion_QuestionIdAndUser_UserId(questionId,userId);
+        return userQuestionAnswerRepository.findByQuestion_QuestionIdAndUser_UserId(questionId, userId);
     }
 
     @Override

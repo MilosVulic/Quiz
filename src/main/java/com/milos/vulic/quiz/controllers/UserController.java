@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -155,7 +154,7 @@ public class UserController {
         User existing = userService.findByUsername(user.getUsername());
         if (existing != null) {
             result.rejectValue("username", null, "There is already an account registered with that username");
-        }else if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty() || user.getLastName().isEmpty() || user.getName().isEmpty()){
+        } else if (user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty() || user.getLastName().isEmpty() || user.getName().isEmpty()) {
             model.addAttribute("message", "message");
             return "register";
         }

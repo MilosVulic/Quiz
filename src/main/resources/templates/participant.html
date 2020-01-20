@@ -13,7 +13,6 @@
 </head>
 
 <body>
-<p> Ovo je userce </p>
 
 <div th:switch="${questionNumberSpecial}" class="container my-7">
     <div class="col-md-12">
@@ -59,7 +58,18 @@
             </div>
         </div>
     </div>
+
+
+
+
     <div th:case="*">you have finished the quiz and here is the rank list limited to top 5 participant
+        <div th:switch="${cestitke}" class="container my-7" style="margin-top: 50px">
+            <div class="col-md-12">
+                <h2 th:case="null"></h2>
+                <div th:case="*"> Cestitke pa ti si prvi na listi
+                </div>
+            </div>
+        </div>
         <div class="alert alert-secondary text-center">
             <div th:switch="${ranklist}" class="container my-7">
                 <div class="col-md-12">
@@ -93,7 +103,7 @@
 </div>
 </div>
 
-<div th:switch="${questionNumberSpecial}" class="container my-7">
+<div th:switch="${questionNumberSpecial}" class="container my-7" style="margin-top: 50px">
     <div class="col-md-12">
         <div th:case="null">
             <form action="#" th:action="@{'/participant/'+${userId}+'/'+${questionNumber} + '/started'}"
