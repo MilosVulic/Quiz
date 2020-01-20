@@ -66,16 +66,16 @@ public class QuestionController {
         List<Question> finalListUser = new ArrayList<>();
         List<Integer> correctnessList = new ArrayList<>();
 
-        for(OfferedAnswer o: listOfTrueOffers){
+        for (OfferedAnswer o : listOfTrueOffers) {
             int correct = 0;
-            for(UserQuestionAnswer u: listaOdgovora){
-                if(u.getOfferedAnswer() != null){
-                    if(u.getOfferedAnswer().getOfferedAnswerId().equals(o.getOfferedAnswerId())){
+            for (UserQuestionAnswer u : listaOdgovora) {
+                if (u.getOfferedAnswer() != null) {
+                    if (u.getOfferedAnswer().getOfferedAnswerId().equals(o.getOfferedAnswerId())) {
                         correct++;
                     }
                 }
             }
-            mapOfQuestionsAndCorrecness.put(o.getQuestion(),correct);
+            mapOfQuestionsAndCorrecness.put(o.getQuestion(), correct);
         }
 
         Map<Question, Integer> sortedMap = MapUtils.sortByValue(mapOfQuestionsAndCorrecness);
@@ -88,8 +88,8 @@ public class QuestionController {
         Collections.reverse(correctnessList);
 
         List<QuestionDTO> listOfQuestionForView = new ArrayList<>();
-        for(int i = 0; i < finalListUser.size(); i++){
-            listOfQuestionForView.add(new QuestionDTO(finalListUser.get(i).getQuestionId(),finalListUser.get(i).getQuestion(),correctnessList.get(i)));
+        for (int i = 0; i < finalListUser.size(); i++) {
+            listOfQuestionForView.add(new QuestionDTO(finalListUser.get(i).getQuestionId(), finalListUser.get(i).getQuestion(), correctnessList.get(i)));
         }
         model.addAttribute("questions", listOfQuestionForView);
         return "list-questions-percentage";
