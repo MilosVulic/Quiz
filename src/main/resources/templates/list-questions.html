@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{main.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Milos Vulic's simple and ez quiz</a>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="alert alert-secondary text-center">
+        <div th:switch="${questions}" class="container my-7">
+            <div class="col-md-12">
+                <h2 th:case="null">No Questions yet!</h2>
+                <div th:case="*">
+                    <table class="table table-striped table-responsive-md">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Question</th>
+                            <th>View offered answers</th>
+                            <th>Delete question</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="question : ${questions}">
+                            <td th:text="${question.questionId}"></td>
+                            <td th:text="${question.question}"></td>
+                            <td>
+                                <form action="#"
+                                      th:action="@{'/offeredAnswers/{questionId}'(questionId=${question.questionId})}"
+                                      th:method="post">
+                                    <input type="hidden" name="_method" value="info"/>
+                                    <button type="submit" class="btn btn-info" name="action" value="info">View answers</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="#"
+                                      th:action="@{'/questions/{questionId}'(questionId=${question.questionId})}"
+                                      th:method="post">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form th:action="@{/questions/new}" method="get">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success control-label">Create</button>
+        </div>
+    </form>
+
+    <form th:action="@{/admin}" method="get">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success control-label">Go to Admin</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

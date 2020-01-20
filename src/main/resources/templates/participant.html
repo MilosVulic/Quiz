@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{main.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+<p> Ovo je userce </p>
+
+<div th:switch="${questionNumberSpecial}" class="container my-7">
+    <div class="col-md-12">
+        <div th:case="null">
+            <div th:switch="${question}" class="container my-7">
+                <div class="col-md-12">
+                    <h2 th:case="null">No Questions yet!</h2>
+                    <div th:case="*">
+                        <div th:text="${question.question}"></div>
+                        <div th:text="'Pitanje broj ' +${questionNumber} + '/' +${numberOfQuestions}"></div>
+                        <br>
+
+                        <form th:action="@{'/participant/'+${userId}+'/'+${questionNumber} + '/started'}"
+                              method="post" th:object="${userAnsDTO}">
+                            <div th:each="offered : ${offeredAns}">
+                                <div class="form-group">
+                                    <label for="offeredAnswerId" class="control-label">
+                                        <div th:text="${offered.offeredAnswer}"></div>
+                                        <div th:text="${offered.offeredAnswerId}"></div>
+                                    </label>
+                                    <input type="radio"
+                                           th:value="${offered.offeredAnswerId}"
+                                           id="offeredAnswerId"
+                                           name="offeredAnswerId"/>
+                                </div>
+                            </div>
+
+                            <div th:switch="${questionNumberSpecial}" class="container my-7">
+                                <div class="col-md-12">
+                                    <div th:case="null">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:case="*">you have finished the quiz and here is the rank list limited to top 5 participant
+        <div class="alert alert-secondary text-center">
+            <div th:switch="${ranklist}" class="container my-7">
+                <div class="col-md-12">
+                    <h2 th:case="null">No User Events yet!</h2>
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${ranklist}">
+                                <td th:text="${user.userId}"></td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.lastName}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.username}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:switch="${questionNumberSpecial}" class="container my-7">
+    <div class="col-md-12">
+        <div th:case="null">
+            <form action="#" th:action="@{'/participant/'+${userId}+'/'+${questionNumber} + '/started'}"
+                  th:method="post">
+                <input type="hidden" name="_method" value="submit"/>
+                <button type="submit" class="btn btn-info">Preskoci</button>
+            </form>
+            <br>
+            <form action="#" th:action="@{'/participant/'+${userId}+'/'+${numberOfQuestions + 1} + '/started'}"
+                  th:method="post">
+                <input type="hidden" name="_method" value="submit"/>
+                <button type="submit" class="btn btn-danger">Odustani</button>
+            </form>
+        </div>
+        <div th:case="*">
+            <form action="#" th:action="@{'/participant/'+${userId}+'/0/started'}" th:method="post">
+                <input type="hidden" name="_method" value="submit"/>
+                <button type="submit" class="btn btn-info">Start again</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
